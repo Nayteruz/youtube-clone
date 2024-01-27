@@ -1,11 +1,7 @@
 import { FC } from "react";
+import { ISubItem } from "./types";
 
-export interface ISubItem {
-  label: string;
-  link?: string;
-}
-
-interface ISubmenuProps {
+export interface ISubmenuProps {
   items: ISubItem[];
   className?: string;
 }

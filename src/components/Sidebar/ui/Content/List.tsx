@@ -1,7 +1,8 @@
 import { FC } from "react";
-import { IItem, ListItem } from "./ListItem";
+import { ListItem } from "./ListItem";
+import { IItem } from "./types";
 
-interface IListProps {
+export interface IListProps {
   items: IItem[];
   rounded?: boolean;
 }

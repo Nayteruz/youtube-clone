@@ -1,5 +1,5 @@
 import { VideoThumbnail } from "./VideoThumbnail";
-import { VideoInfo } from "@src/components/Videos/ui/VideoItem/VideoInfo";
+import { VideoInfo } from "./VideoInfo";
 
 interface IVideoItemProps {
   index: number;

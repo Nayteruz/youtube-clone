@@ -1,10 +1,5 @@
-import { FC, ReactNode } from "react";
-
-interface ICategoriesItemProps {
-  href: string;
-  children: ReactNode;
-  isActive?: boolean;
-}
+import { FC } from "react";
+import { ICategoriesItemProps } from "../../model/types";
 
 export const CategoriesItem: FC<ICategoriesItemProps> = ({
   href = "#",

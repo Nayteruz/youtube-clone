@@ -1,18 +1,6 @@
-import { BaseIcon } from "@src/components/Icons";
 import { FC } from "react";
-import { TIcons } from "@src/components/Icons/model/icons";
-
-export interface IListItem {
-  id: string;
-  label: string;
-  subMenu?: boolean;
-  iconName?: TIcons;
-  href?: string;
-}
-
-export interface IListItemProps {
-  item: IListItem;
-}
+import { IListItemProps } from "./types";
+import { BaseIcon } from "@src/components/shared/Icons";
 
 export const ListItem: FC<IListItemProps> = ({ item }) => {
   const { subMenu, label, iconName, href = "#" } = item;

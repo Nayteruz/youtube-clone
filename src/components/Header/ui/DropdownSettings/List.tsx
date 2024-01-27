@@ -1,9 +1,6 @@
-import { IListItem, ListItem } from "./ListItem";
+import { ListItem } from "./ListItem";
 import { FC } from "react";
-
-interface IListProps {
-  items: IListItem[];
-}
+import { IListProps } from "./types";
 
 export const List: FC<IListProps> = ({ items }) => {
   return (

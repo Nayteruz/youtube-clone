@@ -1,16 +1,22 @@
+import { BaseIcon } from "@src/components/shared/Icons";
+import { LogoMain } from "@src/components/shared/ui/LogoMain";
+import { ButtonLogin } from "@src/components/shared/ui/ButtonLogin";
+import { Search } from "./Search";
+import { useStory } from "@src/hooks/useStory";
 // import { DropdownApps } from "./DropdownApps";
 // import { DropdownSettings } from "./DropdownSettings";
-import { LogoMain } from "@src/components/LogoMain";
-import { Search } from "./Search";
-import { ButtonLogin } from "@src/components/ButtonLogin";
-import { BaseIcon } from "@src/components/Icons";
 
 export const Header = () => {
+  const { setStateBar } = useStory();
+
   return (
     <header className="flex justify-between fixed z-30 w-full">
       <div className="lg:w-1/4 flex">
         <div className="flex items-center xl:w-64 xl:bg-white pl-4">
-          <button className="mr-3 sm:ml-2 sm:mr-6 focus:outline-none">
+          <button
+            className="mr-3 sm:ml-2 sm:mr-6 focus:outline-none"
+            onClick={() => setStateBar(true)}
+          >
             <BaseIcon icon="menu" className="w-6 h-6" />
           </button>
           <a href="#">

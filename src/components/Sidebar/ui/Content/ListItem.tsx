@@ -1,15 +1,8 @@
-import { BaseIcon } from "@src/components/Icons";
 import { FC } from "react";
-import { icons, TIcons } from "@src/components/Icons/model/icons";
+import { BaseIcon } from "@src/components/shared/Icons";
+import { IItem } from "./types";
 
-export interface IItem {
-  label: string;
-  iconName?: TIcons;
-  isActive?: boolean;
-  link?: string;
-}
-
-interface IListItemProps {
+export interface IListItemProps {
   item: IItem;
   rounded?: boolean;
 }

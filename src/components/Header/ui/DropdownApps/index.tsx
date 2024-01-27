@@ -1,5 +1,5 @@
 import { List } from "./List";
-import { IItem } from "./ListItem";
+import { IItem } from "./types";
 
 export const DropdownApps = () => {
   const listTV: IItem[] = [

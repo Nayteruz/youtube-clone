@@ -1,8 +1,5 @@
 import { FC } from "react";
-
-interface ISectionHeadingProps {
-  label: string;
-}
+import { ISectionHeadingProps } from "../../SidebarContent/model/types";
 
 export const SectionHeading: FC<ISectionHeadingProps> = ({ label }) => {
   return (

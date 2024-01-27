@@ -1,6 +1,8 @@
-import { SectionWrapper } from "@src/components/SectionWrapper";
-import { ButtonLogin } from "@src/components/ButtonLogin";
+import { ButtonLogin } from "@src/components/Shared/ui/ButtonLogin";
+import { SectionWrapper } from "@src/components/shared/ui/SectionWrapper";
+import { SectionHeading } from "@src/components/shared/ui/SectionHeading";
 import { List } from "./List";
+import { SidebarFooter } from "./SidebarFooter";
 import {
   bestList,
   browseChannel,
@@ -8,11 +10,9 @@ import {
   libList,
   moreFrom,
   moreFrom2,
-} from "../model/lists";
-import { SectionHeading } from "./SectionHeading";
-import { SidebarFooter } from "./SidebarFooter";
+} from "../../model/content";
 
-export const SidebarContent = () => {
+export const Content = () => {
   return (
     <>
       <SectionWrapper>

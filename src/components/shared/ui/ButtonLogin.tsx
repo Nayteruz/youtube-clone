@@ -1,5 +1,5 @@
-import { BaseIcon } from "@src/components/Icons";
 import { FC } from "react";
+import { BaseIcon } from "@src/components/shared/Icons";
 
 interface IButtonLoginProps {
   className?: string;

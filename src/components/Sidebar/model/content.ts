@@ -1,5 +1,5 @@
-import { IItem } from "@src/components/SidebarContent/ui/ListItem";
-import { ISubItem } from "@src/components/SidebarContent/ui/Submenu";
+import { IItem } from "./types";
+import { ISubItem } from "./types";
 
 export const homeList: IItem[] = [
   {

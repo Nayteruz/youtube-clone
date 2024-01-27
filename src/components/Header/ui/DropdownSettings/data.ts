@@ -1,4 +1,4 @@
-import { IListItem } from "./ListItem";
+import { IListItem } from "./types";
 
 export const listSettings: IListItem[] = [
   {

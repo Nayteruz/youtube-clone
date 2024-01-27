@@ -1,12 +1,8 @@
 import { FC } from "react";
-import { icons, TIcons } from "../model/icons";
+import { icons } from "../model/icons";
+import { IBaseIconProps } from "../model/types";
 
-interface BaseIconProps {
-  icon: TIcons;
-  className?: string;
-}
-
-export const BaseIcon: FC<BaseIconProps> = ({ icon, className = "" }) => {
+export const BaseIcon: FC<IBaseIconProps> = ({ icon, className = "" }) => {
   if (!icons[icon]) {
     return null;
   }
