@@ -1,13 +1,13 @@
-import { BaseIcon } from "@src/components/shared/Icons";
-import { LogoMain } from "@src/components/shared/ui/LogoMain";
-import { ButtonLogin } from "@src/components/shared/ui/ButtonLogin";
+import { BaseIcon } from "@src/shared/Icons";
+import { LogoMain } from "@src/shared/ui/LogoMain";
+import { ButtonLogin } from "@src/shared/ui/ButtonLogin";
 import { Search } from "./Search";
-import { useStory } from "@src/hooks/useStory";
-// import { DropdownApps } from "./DropdownApps";
-// import { DropdownSettings } from "./DropdownSettings";
+import { useChangeViewSidebar } from "@src/hooks/useChangeViewSidebar";
+import { DropdownApps } from "./DropdownApps";
+import { DropdownSettings } from "./DropdownSettings";
 
 export const Header = () => {
-  const { setStateBar } = useStory();
+  const { changeView } = useChangeViewSidebar();
 
   return (
     <header className="flex justify-between fixed z-30 w-full">
@@ -15,7 +15,7 @@ export const Header = () => {
         <div className="flex items-center xl:w-64 xl:bg-white pl-4">
           <button
             className="mr-3 sm:ml-2 sm:mr-6 focus:outline-none"
-            onClick={() => setStateBar(true)}
+            onClick={changeView}
           >
             <BaseIcon icon="menu" className="w-6 h-6" />
           </button>
@@ -37,14 +37,8 @@ export const Header = () => {
         <button className="sm:hidden p-2 focus:outline-none">
           <BaseIcon icon="search" className="w-5 h-5" />
         </button>
-        <button className="relative group p-2 focus:outline-none">
-          <BaseIcon icon="viewGrid" className="w-5 h-5" />
-          {/*<DropdownApps />*/}
-        </button>
-        <button className="relative group p-2 focus:outline-none">
-          <BaseIcon icon="dotsVertical" className="w-5 h-5" />
-          {/*<DropdownSettings />*/}
-        </button>
+        <DropdownApps />
+        <DropdownSettings />
         <ButtonLogin className="whitespace-nowrap py-1" />
       </div>
     </header>

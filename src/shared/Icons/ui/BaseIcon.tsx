@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { icons } from "../model/icons";
 import { IBaseIconProps } from "../model/types";
 
-export const BaseIcon: FC<IBaseIconProps> = ({ icon, className = "" }) => {
+export const BaseIcon: FC<IBaseIconProps> = memo(({ icon, className = "" }) => {
   if (!icons[icon]) {
     return null;
   }
@@ -16,4 +16,6 @@ export const BaseIcon: FC<IBaseIconProps> = ({ icon, className = "" }) => {
       dangerouslySetInnerHTML={{ __html: icons[icon] }}
     />
   );
-};
+});
+
+BaseIcon.displayName = "BaseIcon";

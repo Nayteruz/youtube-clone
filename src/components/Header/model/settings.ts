@@ -1,54 +1,54 @@
-import { IListItem } from "./types";
+import { IDropdownSettingsItem } from "./types";
 
-export const listSettings: IListItem[] = [
+export const listSettings: IDropdownSettingsItem[] = [
   {
-    id: crypto.randomUUID(),
+    id: "1",
     label: "Appearance: Light",
     subMenu: true,
     iconName: "sun",
   },
   {
-    id: crypto.randomUUID(),
+    id: "2",
     label: "Language: English",
     subMenu: true,
     iconName: "lang",
   },
   {
-    id: crypto.randomUUID(),
+    id: "3",
     label: "Location: Russia",
     subMenu: true,
     iconName: "location",
   },
   {
-    id: crypto.randomUUID(),
+    id: "4",
     label: "Settings",
     iconName: "settings",
   },
   {
-    id: crypto.randomUUID(),
+    id: "5",
     label: "Your data in YouTube",
     iconName: "shield",
   },
   {
-    id: crypto.randomUUID(),
+    id: "6",
     label: "Help",
     iconName: "help",
   },
   {
-    id: crypto.randomUUID(),
+    id: "7",
     label: "Send feedback",
     iconName: "send",
   },
   {
-    id: crypto.randomUUID(),
+    id: "8",
     label: "Keyboard shortcuts",
     iconName: "keyboard",
   },
 ];
 
-export const smallList: IListItem[] = [
+export const smallList: IDropdownSettingsItem[] = [
   {
-    id: crypto.randomUUID(),
+    id: "1",
     label: "Restricted Mode: Off",
     subMenu: true,
   },

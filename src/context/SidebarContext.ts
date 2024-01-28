@@ -1,10 +1,17 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 
-export interface ISidebarContext {
-  stateBar: boolean;
-  setStateBar: (value: boolean) => void;
+export type TView = "compact" | "normal";
+
+export interface IStateSidebar {
+  opened: boolean;
+  view: TView;
 }
 
-export const SidebarContext = createContext<ISidebarContext | undefined>(
-  undefined,
+export interface ISidebarContext {
+  stateBar: IStateSidebar;
+  setStateBar: Dispatch<SetStateAction<IStateSidebar>>;
+}
+
+export const SidebarContext = createContext<ISidebarContext>(
+  {} as ISidebarContext,
 );

@@ -137,3 +137,27 @@ export const submenu2: ISubItem[] = [
     label: "Test new features",
   },
 ];
+
+export const smallSidebar: IItem[] = [
+  {
+    iconName: "home",
+    label: "Home",
+    isActive: true,
+  },
+  {
+    iconName: "flame",
+    label: "Trending",
+  },
+  {
+    iconName: "subscript",
+    label: "Subscriptions",
+  },
+  {
+    iconName: "library",
+    label: "Library",
+  },
+  {
+    iconName: "time",
+    label: "History",
+  },
+];

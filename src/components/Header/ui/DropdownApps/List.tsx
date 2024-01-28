@@ -1,6 +1,11 @@
 import { FC } from "react";
 import { ListItem } from "./ListItem";
-import { IListProps } from "./types";
+import { IDropdownAppItem } from "../../model/types";
+
+interface IListProps {
+  className?: string;
+  items: IDropdownAppItem[];
+}
 
 export const List: FC<IListProps> = ({ className, items }) => {
   return (

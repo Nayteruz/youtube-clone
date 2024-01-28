@@ -1,11 +1,11 @@
-import { FC } from "react";
-import { BaseIcon } from "@src/components/shared/Icons";
+import { FC, memo } from "react";
+import { BaseIcon } from "@src/shared/Icons";
 
 interface IVideoInfoProps {
   index: number;
 }
 
-export const VideoInfo: FC<IVideoInfoProps> = ({ index }) => {
+export const VideoInfo: FC<IVideoInfoProps> = memo(({ index }) => {
   const dayPlural = index + 1 === 1 ? "day" : "days";
   const summary = `${index + 1}K views · ${index + 1} ${dayPlural} ago`;
 
@@ -31,4 +31,6 @@ export const VideoInfo: FC<IVideoInfoProps> = ({ index }) => {
       </button>
     </div>
   );
-};
+});
+
+VideoInfo.displayName = "VideoInfo";

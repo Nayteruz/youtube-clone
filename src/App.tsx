@@ -7,10 +7,10 @@ function App() {
   return (
     <>
       <Header />
+      <Categories />
       <SidebarSmall />
       <Sidebar />
       <SidebarMobile />
-      <Categories />
       <Videos />
     </>
   );

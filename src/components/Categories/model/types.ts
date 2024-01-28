@@ -5,3 +5,9 @@ export interface ICategoriesItemProps {
   children: ReactNode;
   isActive?: boolean;
 }
+
+export interface ICategoryItem {
+  label: string;
+  link?: string;
+  isActive?: boolean;
+}

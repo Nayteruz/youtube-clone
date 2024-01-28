@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-interface LogoMainProps {
+interface ILogoMainProps {
   classes?: string;
 }
 
-export const LogoMain: FC<LogoMainProps> = ({ classes = "w-20" }) => {
+export const LogoMain: FC<ILogoMainProps> = ({ classes = "w-20" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

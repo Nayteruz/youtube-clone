@@ -1,15 +1,52 @@
+import { memo, useRef } from "react";
+import { CSSTransition } from "react-transition-group";
+import { BaseIcon } from "@src/shared/Icons";
+import { useClickOutside } from "@src/hooks/useClickOutside";
 import { List } from "./List";
-import { listSettings, smallList } from "./data";
+import { listSettings, smallList } from "../../model/settings";
 
-export const DropdownSettings = () => {
+export const DropdownSettings = memo(() => {
+  const { click: isOpen, setClick: setIsOpen } =
+    useClickOutside("#dropdownSettings");
+  const listRef = useRef(null);
+
   return (
-    <div className="opacity-0 group-hover:opacity-100 absolute top-9 -right-full sm:right-0 bg-white w-72 border border-t-0">
-      <section className="py-2 border-b">
-        <List items={listSettings} />
-      </section>
-      <section className="py-2">
-        <List items={smallList} />
-      </section>
+    <div className="relative" id="dropdownSettings">
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="p-2 focus:outline-none"
+      >
+        <BaseIcon icon="dotsVertical" className="w-5 h-5" />
+      </button>
+      <CSSTransition
+        nodeRef={listRef}
+        in={isOpen}
+        timeout={100}
+        unmountOnExit
+        classNames={{
+          // появление
+          enter: "opacity-0 scale-95",
+          enterActive:
+            "opacity-100 scale-100 transition-opacity ease-out duration-100",
+          // исчезновение
+          exit: "transition-opacity ease-in duration-75",
+          exitActive: "opacity-0 scale-95",
+        }}
+      >
+        <div
+          ref={listRef}
+          className="absolute top-9 right-0 bg-white w-72 border border-t-0"
+        >
+          <section className="py-2 border-b">
+            <List items={listSettings} />
+          </section>
+          <section className="py-2">
+            <List items={smallList} />
+          </section>
+        </div>
+      </CSSTransition>
     </div>
   );
-};
+});
+
+DropdownSettings.displayName = "DropdownSettings";

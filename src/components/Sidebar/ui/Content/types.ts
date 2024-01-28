@@ -1,4 +1,4 @@
-import { TIcons } from "@src/components/shared/Icons";
+import { TIcons } from "@src/shared/Icons";
 
 export interface IItem {
   label: string;

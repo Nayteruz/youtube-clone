@@ -1,6 +1,6 @@
-import { ButtonLogin } from "@src/components/Shared/ui/ButtonLogin";
-import { SectionWrapper } from "@src/components/shared/ui/SectionWrapper";
-import { SectionHeading } from "@src/components/shared/ui/SectionHeading";
+import { ButtonLogin } from "@src/shared/ui/ButtonLogin";
+import { SectionWrapper } from "@src/shared/ui/SectionWrapper";
+import { SectionHeading } from "@src/shared/ui/SectionHeading";
 import { List } from "./List";
 import { SidebarFooter } from "./SidebarFooter";
 import {

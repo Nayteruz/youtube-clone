@@ -1,6 +1,6 @@
 import { Submenu } from "./Submenu";
 import { submenu1, submenu2 } from "../../model/content";
-import { SectionWrapper } from "@src/components/shared/ui/SectionWrapper";
+import { SectionWrapper } from "@src/shared/ui/SectionWrapper";
 
 export const SidebarFooter = () => {
   return (

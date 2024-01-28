@@ -1,6 +1,10 @@
 import { ReactNode, useMemo, useState } from "react";
 
-import { SidebarContext, ISidebarContext } from "@src/context/SidebarContext";
+import {
+  SidebarContext,
+  ISidebarContext,
+  IStateSidebar,
+} from "@src/context/SidebarContext";
 
 interface SidebarProviderProps {
   children: ReactNode;
@@ -8,7 +12,10 @@ interface SidebarProviderProps {
 
 const SidebarProvider = (props: SidebarProviderProps) => {
   const { children } = props;
-  const [stateBar, setStateBar] = useState<boolean>(false);
+  const [stateBar, setStateBar] = useState<IStateSidebar>({
+    opened: false,
+    view: "normal",
+  });
 
   const defaultProps: ISidebarContext = useMemo(
     () => ({

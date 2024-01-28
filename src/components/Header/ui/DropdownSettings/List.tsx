@@ -1,8 +1,12 @@
-import { ListItem } from "./ListItem";
 import { FC } from "react";
-import { IListProps } from "./types";
+import { IDropdownSettingsItem } from "../../model/types";
+import { ListItem } from "./ListItem";
 
-export const List: FC<IListProps> = ({ items }) => {
+interface IDropdownListSettingsProps {
+  items: IDropdownSettingsItem[];
+}
+
+export const List: FC<IDropdownListSettingsProps> = ({ items }) => {
   return (
     <ul>
       {items.length &&

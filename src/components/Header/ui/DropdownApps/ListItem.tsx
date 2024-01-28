@@ -1,17 +1,21 @@
 import { FC } from "react";
-import { IListItemProps } from "./types";
-import { BaseIcon } from "@src/components/shared/Icons";
+import { BaseIcon } from "@src/shared/Icons";
+import { IDropdownAppItem } from "../../model/types";
 
-export const ListItem: FC<IListItemProps> = ({ item }) => {
-  const { label, href } = item;
+interface IDropdownAppProps {
+  item: IDropdownAppItem;
+}
+
+export const ListItem: FC<IDropdownAppProps> = ({ item }) => {
+  const { label, link } = item;
 
   return (
     <li>
       <a
-        href={href}
+        href={link || "#"}
         className="flex items-center px-3 py-2 label-sm hover:bg-gray-100"
       >
-        <BaseIcon icon="play" className="w-6 h-6 mr-3 label-red-500" />
+        <BaseIcon icon="play" className="w-6 h-6 mr-3 text-red-500" />
         <span>{label}</span>
       </a>
     </li>

@@ -1,1 +1,1 @@
-export { Categories } from "./ui/Categories/Categories";
+export { Categories } from "./ui/Categories";

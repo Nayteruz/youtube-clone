@@ -1,11 +1,11 @@
-import { FC } from "react";
-import { BaseIcon } from "@src/components/shared/Icons";
+import { FC, memo } from "react";
+import { BaseIcon } from "@src/shared/Icons";
 
 interface IVideoThumbnailProps {
   index: number;
 }
 
-export const VideoThumbnail: FC<IVideoThumbnailProps> = ({ index }) => {
+export const VideoThumbnail: FC<IVideoThumbnailProps> = memo(({ index }) => {
   const randomNumber = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
@@ -27,4 +27,6 @@ export const VideoThumbnail: FC<IVideoThumbnailProps> = ({ index }) => {
       </span>
     </div>
   );
-};
+});
+
+VideoThumbnail.displayName = "VideoThumbnail";

@@ -1,4 +1,4 @@
-import { BaseIcon } from "@src/components/shared/Icons";
+import { BaseIcon } from "@src/shared/Icons";
 
 export const ButtonSearch = () => {
   return (

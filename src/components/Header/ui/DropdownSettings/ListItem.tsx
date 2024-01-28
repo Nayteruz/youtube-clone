@@ -1,8 +1,12 @@
 import { FC } from "react";
-import { IListItemProps } from "./types";
-import { BaseIcon } from "@src/components/shared/Icons";
+import { BaseIcon } from "@src/shared/Icons";
+import { IDropdownSettingsItem } from "../../model/types";
 
-export const ListItem: FC<IListItemProps> = ({ item }) => {
+interface IDropdownSettingsItemProps {
+  item: IDropdownSettingsItem;
+}
+
+export const ListItem: FC<IDropdownSettingsItemProps> = ({ item }) => {
   const { subMenu, label, iconName, href = "#" } = item;
   return (
     <li>
