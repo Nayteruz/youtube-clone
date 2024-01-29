@@ -15,7 +15,11 @@ export const VideoThumbnail: FC<IVideoThumbnailProps> = memo(({ index }) => {
 
   return (
     <div className="relative">
-      <img src={`https://loremflickr.com/500/500?video=${index}`} alt="" />
+      <img
+        className="w-full h-full object-cover"
+        src={`https://loremflickr.com/500/500?video=${index}`}
+        alt=""
+      />
       <span className="opacity-0 group-hover:opacity-100 bg-opacity-60 absolute top-0 right-0 bg-black text-white rounded-sm m-1 p-1">
         <BaseIcon icon="time" className="w-5 h-5" />
       </span>

@@ -9,17 +9,22 @@ import { useEscape } from "@src/hooks/useEscape";
 import { useChangeViewSidebar } from "@src/hooks/useChangeViewSidebar";
 
 export const SidebarMobile = () => {
-  const overlayRef = useRef(null);
-  const sideRef = useRef(null);
-  useEscape();
-  const { stateBar } = useStory();
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const sideRef = useRef<HTMLElement>(null);
+  const { stateBar, setStateBar } = useStory();
   const { changeView } = useChangeViewSidebar();
+  useEscape<HTMLElement>(sideRef, stateBar.isMobileSidebarOpen, () => {
+    setStateBar((prev) => ({
+      ...prev,
+      isMobileSidebarOpen: false,
+    }));
+  });
 
   return (
     <>
       <CSSTransition
         nodeRef={overlayRef}
-        in={stateBar.opened}
+        in={stateBar.isMobileSidebarOpen}
         timeout={200}
         unmountOnExit
         classNames={{
@@ -40,9 +45,10 @@ export const SidebarMobile = () => {
       </CSSTransition>
       <CSSTransition
         nodeRef={sideRef}
-        in={stateBar.opened}
+        in={stateBar.isMobileSidebarOpen}
         timeout={200}
         unmountOnExit
+        onEntered={() => sideRef?.current?.focus()}
         classNames={{
           enter: "-translate-x-full",
           enterActive:
@@ -53,7 +59,8 @@ export const SidebarMobile = () => {
       >
         <aside
           ref={sideRef}
-          className="w-64 max-h-screen overflow-auto bg-white fixed z-40"
+          tabIndex={-1}
+          className="w-64 max-h-screen overflow-auto bg-white fixed z-40 outline-none"
         >
           <SectionWrapper className="flex items-center p-4 border-b sticky top-0 bg-white -mb-2">
             <button

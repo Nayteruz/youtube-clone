@@ -4,7 +4,7 @@ import { useStory } from "@src/hooks/useStory";
 
 export const Videos = memo(() => {
   const { stateBar } = useStory();
-  const isCompact = stateBar.view === "compact" ? "xl:ml-24" : "xl:ml-64";
+  const isCompact = stateBar.isCompactSidebarOpen ? "xl:ml-24" : "xl:ml-64";
 
   return (
     <main className={`${isCompact} md:ml-24 pt-32 px-5 pb-5`}>

@@ -1,10 +1,10 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 
-export type TView = "compact" | "normal";
-
 export interface IStateSidebar {
-  opened: boolean;
-  view: TView;
+  isCompactSidebarOpen: boolean;
+  isSidebarOpen: boolean;
+  isCompactSidebarActive: boolean;
+  isMobileSidebarOpen: boolean;
 }
 
 export interface ISidebarContext {

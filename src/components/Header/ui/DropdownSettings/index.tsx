@@ -4,11 +4,13 @@ import { BaseIcon } from "@src/shared/Icons";
 import { useClickOutside } from "@src/hooks/useClickOutside";
 import { List } from "./List";
 import { listSettings, smallList } from "../../model/settings";
+import { useEscape } from "@src/hooks/useEscape";
 
 export const DropdownSettings = memo(() => {
+  const listRef = useRef<HTMLDivElement>(null);
   const { click: isOpen, setClick: setIsOpen } =
     useClickOutside("#dropdownSettings");
-  const listRef = useRef(null);
+  useEscape<HTMLDivElement>(listRef, isOpen, () => setIsOpen(false));
 
   return (
     <div className="relative" id="dropdownSettings">
@@ -23,6 +25,7 @@ export const DropdownSettings = memo(() => {
         in={isOpen}
         timeout={100}
         unmountOnExit
+        onEntered={() => listRef?.current?.focus()}
         classNames={{
           // появление
           enter: "opacity-0 scale-95",
@@ -35,7 +38,8 @@ export const DropdownSettings = memo(() => {
       >
         <div
           ref={listRef}
-          className="absolute top-9 right-0 bg-white w-72 border border-t-0"
+          tabIndex={-1}
+          className="absolute top-9 right-0 bg-white w-72 border border-t-0 outline-none"
         >
           <section className="py-2 border-b">
             <List items={listSettings} />

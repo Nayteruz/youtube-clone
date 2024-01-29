@@ -1,23 +1,30 @@
 import { useStory } from "@src/hooks/useStory";
-import { useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
-export const useEscape = () => {
+export const useEscape = <T>(
+  ref: RefObject<T>,
+  changeState: boolean,
+  callback: () => void,
+) => {
   const { setStateBar } = useStory();
 
   useEffect(() => {
+    const element = ref.current;
+
+    if (!element) {
+      return;
+    }
+
     const keydown = (e: KeyboardEvent) => {
       if (e.code === "Escape") {
-        setStateBar((prev) => ({
-          ...prev,
-          opened: false,
-        }));
+        callback();
       }
     };
 
-    document.addEventListener("keydown", keydown);
+    (element as any).addEventListener("keydown", keydown);
 
     return () => {
-      document.removeEventListener("keydown", keydown);
+      (element as any).removeEventListener("keydown", keydown);
     };
-  }, [setStateBar]);
+  }, [ref, setStateBar, changeState, callback]);
 };

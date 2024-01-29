@@ -7,7 +7,10 @@ export const Categories = memo(() => {
   const { stateBar } = useStory();
   const normalClasses =
     "pt-14 md:pl-24 w-full fixed bg-white bg-opacity-95 z-10";
-  const isCompact = stateBar.view === "compact" ? "xl:pl-24" : "xl:pl-64";
+  const isCompact =
+    stateBar.isCompactSidebarOpen || stateBar.isCompactSidebarActive
+      ? "xl:pl-24"
+      : "xl:pl-64";
 
   return (
     <section className={`${isCompact} ${normalClasses}`}>
