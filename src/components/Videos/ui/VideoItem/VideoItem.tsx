@@ -8,10 +8,10 @@ interface IVideoItemProps {
 
 export const VideoItem = memo(({ index }: IVideoItemProps) => {
   return (
-    <a href="#" className="mb-7 group">
+    <div className="mb-7 group">
       <VideoThumbnail index={index} />
       <VideoInfo index={index} />
-    </a>
+    </div>
   );
 });
 
