@@ -1,28 +1,41 @@
 import { BaseIcon } from "@src/shared/Icons";
 import { DropdownItem } from "./DropdownItem";
-import { MouseEvent, useRef } from "react";
+import { MouseEvent, useRef, useState } from "react";
 import { useClickOutside } from "@src/hooks/useClickOutside";
 import { useEscape } from "@src/hooks/useEscape";
 import { CSSTransition } from "react-transition-group";
+import { useDropdownClass } from "@src/hooks/useDropdownClass";
 
-export const Dropdown = ({ index }: { index: number }) => {
+export const Dropdown = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { click: isOpen, setClick: setIsOpen } = useClickOutside(
-    `#dropdownInfo${index}`,
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { click: isOpen, setClick: setIsOpen } =
+    useClickOutside(`.dropdownInfo`);
+  const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
+  const [clickInfo, setClickInfo] = useState<MouseEvent>({} as MouseEvent);
+  useEscape<HTMLDivElement>(dropdownRef, isAnimatedOpen, () =>
+    setIsOpen(false),
   );
-  useEscape<HTMLDivElement>(dropdownRef, isOpen, () => setIsOpen(false));
+
+  const positionClasses = useDropdownClass<HTMLDivElement, HTMLButtonElement>({
+    dropdown: dropdownRef,
+    button: buttonRef,
+    clickInfo,
+    isOpen: isAnimatedOpen,
+  });
+
+  const buttonClasses = `p-1 group-hover:opacity-100 text-gray-500 hover:text-gray-700 focus:outline-none target-button ${isAnimatedOpen ? "opacity-100" : "opacity-0"}`;
+  const dropdownBlock = `absolute bg-white w-60 rounded shadow outline-none z-30 ${positionClasses}`;
 
   const toggleOpen = (e: MouseEvent) => {
     e.preventDefault();
     setIsOpen((prev) => !prev);
+    setClickInfo(e);
   };
 
   return (
-    <div className="relative ml-auto" id={`dropdownInfo${index}`}>
-      <button
-        onClick={toggleOpen}
-        className="-mt-1 ml-auto p-1 opacity-0 group-hover:opacity-100 text-gray-500 hover:text-gray-700 focus:outline-none"
-      >
+    <div className="relative -mt-1 ml-auto dropdownInfo">
+      <button ref={buttonRef} onClick={toggleOpen} className={buttonClasses}>
         <BaseIcon icon="dotsVertical" className="w-6 h-6" />
       </button>
       <CSSTransition
@@ -30,7 +43,8 @@ export const Dropdown = ({ index }: { index: number }) => {
         in={isOpen}
         timeout={100}
         unmountOnExit
-        onEntered={() => dropdownRef?.current?.focus()}
+        onEnter={() => setIsAnimatedOpen(true)}
+        onExited={() => setIsAnimatedOpen(false)}
         classNames={{
           // появление
           enter: "opacity-0 scale-95",
@@ -41,11 +55,7 @@ export const Dropdown = ({ index }: { index: number }) => {
           exitActive: "opacity-0 scale-95",
         }}
       >
-        <div
-          ref={dropdownRef}
-          tabIndex={-1}
-          className="absolute top-9 right-0 bg-white w-60 rounded shadow outline-none"
-        >
+        <div ref={dropdownRef} tabIndex={-1} className={dropdownBlock}>
           <section className="py-2">
             <ul>
               <DropdownItem

@@ -29,7 +29,7 @@ export const VideoInfo: FC<IVideoInfoProps> = memo(({ index }) => {
         </div>
         <div>{summary}</div>
       </div>
-      <Dropdown index={index} />
+      <Dropdown />
     </div>
   );
 });
