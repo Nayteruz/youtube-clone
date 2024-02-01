@@ -5,21 +5,25 @@ import { List } from "./List";
 import { listArtists, listMusic, listTV } from "../../model/apps";
 import { useClickOutside } from "@src/hooks/useClickOutside";
 import { useEscape } from "@src/hooks/useEscape";
+import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
 
 export const DropdownApps = memo(() => {
   const listRef = useRef<HTMLDivElement>(null);
   const { click: isOpen, setClick: setIsOpen } =
     useClickOutside("#dropdownApps");
   useEscape<HTMLDivElement>(listRef, isOpen, () => setIsOpen(false));
+  const classes = `z-10 absolute top-9 right-0 bg-white w-60 border border-t-0 outline-none`;
 
   return (
     <div className="relative" id="dropdownApps">
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="p-2 focus:outline-none"
-      >
-        <BaseIcon icon="viewGrid" className="w-5 h-5" />
-      </button>
+      <BaseTooltip textLabel="Youtube apps">
+        <button
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="p-2 focus:outline-none"
+        >
+          <BaseIcon icon="viewGrid" className="w-5 h-5" />
+        </button>
+      </BaseTooltip>
       <CSSTransition
         nodeRef={listRef}
         in={isOpen}
@@ -36,11 +40,7 @@ export const DropdownApps = memo(() => {
           exitActive: "opacity-0 scale-95",
         }}
       >
-        <div
-          ref={listRef}
-          tabIndex={-1}
-          className="absolute top-9 right-0 bg-white w-60 border border-t-0 outline-none"
-        >
+        <div ref={listRef} tabIndex={-1} className={classes}>
           <List className="py-2 border-b" items={listTV} />
           <List className="py-2 border-b" items={listMusic} />
           <List className="py-2" items={listArtists} />
