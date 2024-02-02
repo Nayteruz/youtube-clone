@@ -5,17 +5,34 @@ interface IBaseTooltipProps {
   children: ReactNode;
   textLabel: string;
   top?: boolean;
+  right?: boolean;
+  left?: boolean;
 }
 
 export const BaseTooltip: FC<IBaseTooltipProps> = ({
   children,
   textLabel,
   top = false,
+  right = false,
+  left = false,
 }) => {
   const labelRef = useRef<HTMLDivElement>(null);
-  const classes = `bg-gray-600 bg-opacity-80 rounded-sm text-white text-xs whitespace-nowrap p-2 absolute left-1/2 transform -translate-x-1/2 ${top ? "bottom-10" : "top-14"}`;
-
   const [isShown, setIsShown] = useState(false);
+
+  const getPositionClasses = () => {
+    const topClass = top ? "bottom-10" : "top-14";
+
+    if (right) {
+      return `${topClass} right-0`;
+    }
+
+    if (left) {
+      return `${topClass} left-0`;
+    }
+
+    return `${topClass} left-1/2 -translate-x-1/2`;
+  };
+  const classes = `bg-gray-600 bg-opacity-80 rounded-sm text-white text-xs whitespace-nowrap p-2 absolute transform ${getPositionClasses()}`;
 
   return (
     <div className="relative">

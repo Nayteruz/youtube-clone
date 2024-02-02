@@ -11,8 +11,10 @@ function App() {
 
   return (
     <>
-      <Header />
-      <Categories />
+      <div className="fixed top-0 w-full z-30 bg-white bg-opacity-95">
+        <Header />
+        <Categories />
+      </div>
       {stateBar.isCompactSidebarOpen && <SidebarSmall />}
       {stateBar.isSidebarOpen && <Sidebar />}
       <SidebarMobile />
