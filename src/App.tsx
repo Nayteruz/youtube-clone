@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <div className="fixed top-0 w-full z-30 bg-white bg-opacity-95">
+      <div className="fixed top-0 z-30 w-full bg-white bg-opacity-95">
         <Header />
         <Categories />
       </div>

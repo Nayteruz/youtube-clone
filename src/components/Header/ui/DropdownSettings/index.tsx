@@ -2,10 +2,9 @@ import { memo, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import { BaseIcon } from "@src/shared/Icons";
 import { useClickOutside } from "@src/hooks/useClickOutside";
-import { List } from "./List";
-import { listSettings, smallList } from "../../model/settings";
 import { useEscape } from "@src/hooks/useEscape";
 import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
+import { MenuList } from "@src/components/Header/ui/DropdownSettings/MenuList";
 
 export const DropdownSettings = memo(() => {
   const listRef = useRef<HTMLDivElement>(null);
@@ -41,12 +40,7 @@ export const DropdownSettings = memo(() => {
         }}
       >
         <div ref={listRef} tabIndex={-1} className={classes}>
-          <section className="py-2 border-b">
-            <List items={listSettings} />
-          </section>
-          <section className="py-2">
-            <List items={smallList} />
-          </section>
+          <MenuList />
         </div>
       </CSSTransition>
     </div>

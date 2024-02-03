@@ -16,7 +16,7 @@ export const Header = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isMobileSearchActive, setIsMobileSearchActive] = useState(false);
   const searchShown = isSmallScreen && isMobileSearchActive;
-  const classes = `flex justify-between w-full`;
+  const classes = `flex justify-between w-full z-30 relative`;
 
   useEffect(() => {
     const changeScreen = () => {

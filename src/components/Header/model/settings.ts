@@ -1,55 +1,72 @@
-import { IDropdownSettingsItem } from "./types";
+import { IDropdownSettingsItem } from "@src/components/Header/model/types";
 
-export const listSettings: IDropdownSettingsItem[] = [
+const appearance = [
   {
-    id: "1",
-    label: "Appearance: Light",
-    subMenu: true,
-    iconName: "sun",
+    label: "Use device theme",
   },
   {
-    id: "2",
+    label: "Dark theme",
+  },
+  {
+    label: "Light theme",
+  },
+];
+
+const languages = [
+  {
+    label: "Language: Russian",
+  },
+  {
     label: "Language: English",
-    subMenu: true,
+  },
+  {
+    label: "Language: African",
+  },
+];
+
+export const menuSettings: IDropdownSettingsItem[] = [
+  {
+    label: "Appearance: Light",
+    iconName: "sun",
+    submenu: appearance,
+    description: "Settings applies to this browser only",
+  },
+  {
+    label: "Language: English",
     iconName: "lang",
+    submenu: languages,
+    description: "Select your language",
   },
   {
-    id: "3",
     label: "Location: Russia",
-    subMenu: true,
     iconName: "location",
+    submenu: [],
+    description: "test description",
   },
   {
-    id: "4",
     label: "Settings",
     iconName: "settings",
   },
   {
-    id: "5",
     label: "Your data in YouTube",
     iconName: "shield",
   },
   {
-    id: "6",
     label: "Help",
     iconName: "help",
   },
   {
-    id: "7",
     label: "Send feedback",
     iconName: "send",
   },
   {
-    id: "8",
     label: "Keyboard shortcuts",
     iconName: "keyboard",
   },
-];
-
-export const smallList: IDropdownSettingsItem[] = [
   {
-    id: "1",
     label: "Restricted Mode: Off",
-    subMenu: true,
+    submenu: [],
+    description: "test description",
+    border: true,
   },
 ];

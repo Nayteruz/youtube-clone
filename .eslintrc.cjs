@@ -21,7 +21,9 @@ module.exports = {
     'prettier/prettier': "off",
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': 'off',
     'prefer-const': 'warn',
-    'no-var': 'error'
+    'no-var': 'error',
+    '@typescript-eslint/no-unused-vars': 'error'
   },
 }

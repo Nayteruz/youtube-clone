@@ -1,15 +1,10 @@
 import { TIcons } from "@src/shared/Icons";
 
-export interface IDropdownAppItem {
-  id: string;
-  label: string;
-  link?: string;
-}
-
 export interface IDropdownSettingsItem {
-  id: string;
   label: string;
-  subMenu?: boolean;
+  submenu?: IDropdownSettingsItem[];
   iconName?: TIcons;
-  href?: string;
+  link?: string;
+  description?: string;
+  border?: boolean;
 }
