@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useClickOutside = (id: string) => {
+export const useClickOutside = (id: string, callback?: () => void) => {
   const [click, setClick] = useState(false);
 
   useEffect(() => {
@@ -12,6 +12,7 @@ export const useClickOutside = (id: string) => {
       const element = target as HTMLDivElement;
       if (!element.closest(id)) {
         setClick(false);
+        callback && callback();
       }
     };
 

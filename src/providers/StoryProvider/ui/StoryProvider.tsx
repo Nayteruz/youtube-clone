@@ -13,8 +13,10 @@ interface SidebarProviderProps {
 const SidebarProvider = (props: SidebarProviderProps) => {
   const { children } = props;
   const [stateBar, setStateBar] = useState<IStateSidebar>({
-    opened: false,
-    view: "normal",
+    isSidebarOpen: false,
+    isMobileSidebarOpen: false,
+    isCompactSidebarActive: false,
+    isCompactSidebarOpen: false,
   });
 
   const defaultProps: ISidebarContext = useMemo(

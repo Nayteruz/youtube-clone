@@ -5,12 +5,25 @@ import { useClickOutside } from "@src/hooks/useClickOutside";
 import { useEscape } from "@src/hooks/useEscape";
 import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
 import { Menu } from "./Menu";
+import { useMenu } from "@src/hooks/useMenu";
 
 export const DropdownSettings = memo(() => {
   const listRef = useRef<HTMLDivElement>(null);
-  const { click: isOpen, setClick: setIsOpen } =
-    useClickOutside("#dropdownSettings");
-  useEscape<HTMLDivElement>(listRef, isOpen, () => setIsOpen(false));
+  const { setMenuId } = useMenu();
+  const { click: isOpen, setClick: setIsOpen } = useClickOutside(
+    "#dropdownSettings",
+    async () => {
+      setTimeout(() => {
+        setMenuId(null);
+      }, 100);
+    },
+  );
+  useEscape<HTMLDivElement>(listRef, isOpen, async () => {
+    setIsOpen(false);
+    setTimeout(() => {
+      setMenuId(null);
+    }, 100);
+  });
   const classes = `z-10 absolute top-9 right-0 bg-white w-72 border border-t-0 outline-none`;
 
   return (

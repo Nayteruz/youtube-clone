@@ -1,18 +1,14 @@
 import { menuSettings } from "../../model/settings";
 import { ListItem } from "./ListItem";
-import { memo, useState } from "react";
-import { IActiveItem, IDropdownItem } from "../../model/types";
-import { Submenu } from "./Submenu";
+import { FC, memo } from "react";
+import { useMenu } from "@src/hooks/useMenu";
+import { Appearance } from "./SubMenus/Appearance";
+import { Language } from "./SubMenus/Language";
+import { Location } from "./SubMenus/Location";
+import { Restricted } from "./SubMenus/Restricted";
 
-export const Menu = memo(() => {
-  const [activeSubmenu, setActiveSubmenu] = useState<IDropdownItem | null>(
-    null,
-  );
-  const [activeSubItems, setActiveSubItems] = useState<IActiveItem[]>([]);
-
-  const setActiveItem = (item: IDropdownItem | null) => {
-    setActiveSubmenu(item);
-  };
+export const Menu: FC = memo(() => {
+  const { menuId } = useMenu();
 
   if (!menuSettings || !menuSettings.length) {
     return null;
@@ -20,23 +16,19 @@ export const Menu = memo(() => {
 
   return (
     <>
-      {menuSettings && menuSettings.length > 0 && !activeSubmenu && (
+      {menuSettings && menuSettings.length > 0 && !menuId && (
         <section className="py-2 border-b">
           <ul>
             {menuSettings.map((item) => (
-              <ListItem key={item.id} item={item} setActive={setActiveItem} />
+              <ListItem key={item.id} item={item} />
             ))}
           </ul>
         </section>
       )}
-      {activeSubmenu && (
-        <Submenu
-          item={activeSubmenu}
-          setActiveItem={setActiveItem}
-          activeSubItems={activeSubItems}
-          setActiveSubItems={setActiveSubItems}
-        />
-      )}
+      {menuId === "appearance" && <Appearance />}
+      {menuId === "language" && <Language />}
+      {menuId === "location" && <Location />}
+      {menuId === "restricted" && <Restricted />}
     </>
   );
 });

@@ -1,10 +1,5 @@
 import { TIcons } from "@src/shared/Icons";
 
-export interface IActiveItem {
-  menuId: string;
-  subMenuId: string;
-}
-
 export interface IDropdownSubitem {
   id: string;
   label: string;
@@ -14,7 +9,7 @@ export interface IDropdownSubitem {
 export interface IDropdownItem {
   id: string;
   label: string;
-  submenu?: IDropdownSubitem[];
+  submenu?: boolean;
   iconName?: TIcons;
   isActive?: boolean;
   link?: string;

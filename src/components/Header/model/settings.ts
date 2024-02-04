@@ -1,86 +1,56 @@
-import { IDropdownItem } from "@src/components/Header/model/types";
-
-const appearance = [
-  {
-    id: "1",
-    label: "Use device theme",
-  },
-  {
-    id: "2",
-    label: "Dark theme",
-  },
-  {
-    id: "3",
-    label: "Light theme",
-  },
-];
-
-const languages = [
-  {
-    id: "1",
-    label: "Language: Russian",
-  },
-  {
-    id: "2",
-    label: "Language: English",
-  },
-  {
-    id: "3",
-    label: "Language: African",
-  },
-];
+import { IDropdownItem } from "./types";
 
 export const menuSettings: IDropdownItem[] = [
   {
-    id: "1",
+    id: "appearance",
     label: "Appearance: Light",
     iconName: "sun",
-    submenu: appearance,
+    submenu: true,
     description: "Settings applies to this browser only",
   },
   {
-    id: "2",
+    id: "language",
     label: "Language: English",
     iconName: "lang",
-    submenu: languages,
+    submenu: true,
     description: "Select your language",
   },
   {
-    id: "3",
+    id: "location",
     label: "Location: Russia",
     iconName: "location",
-    submenu: [],
-    description: "test description",
+    submenu: true,
+    description: "Choose your location",
   },
   {
-    id: "4",
+    id: "settings",
     label: "Settings",
     iconName: "settings",
   },
   {
-    id: "5",
+    id: "shield",
     label: "Your data in YouTube",
     iconName: "shield",
   },
   {
-    id: "6",
+    id: "help",
     label: "Help",
     iconName: "help",
   },
   {
-    id: "7",
+    id: "feedback",
     label: "Send feedback",
     iconName: "send",
   },
   {
-    id: "8",
+    id: "keyboard_shortcats",
     label: "Keyboard shortcuts",
     iconName: "keyboard",
   },
   {
-    id: "9",
+    id: "restricted",
     label: "Restricted Mode: Off",
-    submenu: [],
+    submenu: true,
     description: "test description",
     border: true,
   },
