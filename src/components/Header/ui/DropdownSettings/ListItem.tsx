@@ -1,10 +1,10 @@
 import { FC, memo, MouseEvent } from "react";
 import { BaseIcon } from "@src/shared/Icons";
-import { IDropdownSettingsItem } from "../../model/types";
+import { IDropdownItem } from "../../model/types";
 
 interface IDropdownSettingsItemProps {
-  item: IDropdownSettingsItem;
-  setActive?: (item: IDropdownSettingsItem) => void;
+  item: IDropdownItem;
+  setActive?: (item: IDropdownItem) => void;
 }
 
 export const ListItem: FC<IDropdownSettingsItemProps> = memo(

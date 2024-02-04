@@ -4,7 +4,7 @@ import { BaseIcon } from "@src/shared/Icons";
 import { useClickOutside } from "@src/hooks/useClickOutside";
 import { useEscape } from "@src/hooks/useEscape";
 import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
-import { MenuList } from "@src/components/Header/ui/DropdownSettings/MenuList";
+import { Menu } from "./Menu";
 
 export const DropdownSettings = memo(() => {
   const listRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ export const DropdownSettings = memo(() => {
         }}
       >
         <div ref={listRef} tabIndex={-1} className={classes}>
-          <MenuList />
+          <Menu />
         </div>
       </CSSTransition>
     </div>

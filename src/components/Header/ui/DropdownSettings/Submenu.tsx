@@ -1,41 +1,48 @@
 import { BaseIcon } from "@src/shared/Icons";
-import { IDropdownSettingsItem } from "../../model/types";
-import { FC, memo, MouseEvent } from "react";
-import { ListItemSubmenu } from "@src/components/Header/ui/DropdownSettings/ListItemSubmenu";
+import { IActiveItem, IDropdownItem } from "../../model/types";
+import { Dispatch, FC, memo, MouseEvent, SetStateAction } from "react";
+import { SubItem } from "./SubItem";
 
 interface ISubmenuProps {
-  item: IDropdownSettingsItem;
-  setActive: (nullItem: null) => void;
-  changeSubItem: (item: IDropdownSettingsItem) => void;
+  item: IDropdownItem;
+  setActiveItem: (nullItem: null) => void;
+  activeSubItems: IActiveItem[];
+  setActiveSubItems: Dispatch<SetStateAction<IActiveItem[]>>;
 }
 
 export const Submenu: FC<ISubmenuProps> = memo(
-  ({ item, setActive, changeSubItem }) => {
+  ({ item, setActiveItem, activeSubItems, setActiveSubItems }) => {
     const setActiveNull = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      setActive(null);
+      setActiveItem(null);
     };
 
     return (
-      <ul>
-        <li className="border-b flex items-center px-4 py-2 gap-2 font-semibold">
-          <span onClick={setActiveNull}>
-            <BaseIcon icon="chevronLeft" />
-          </span>
-          <span>{item.label}</span>
-        </li>
-        {item?.description && (
-          <li className="text-sm px-4 py-2">{item.description}</li>
-        )}
-        {item?.submenu?.map((subitem) => (
-          <ListItemSubmenu
-            key={subitem.label}
-            item={subitem}
-            changeSubItem={changeSubItem}
-          />
-        ))}
-      </ul>
+      <>
+        <section className="flex border-b border-gray-200 text-black">
+          <button onClick={setActiveNull} className="px-3 focus:outline-none">
+            <BaseIcon icon="chevronLeft" className="w-5 h-5" />
+          </button>
+          <span className="py-3">{item.label}</span>
+        </section>
+        <section className="py-2">
+          {item?.description && (
+            <div className="text-gray-500 text-xs p-3">{item.description}</div>
+          )}
+          <ul>
+            {item?.submenu?.map((subitem) => (
+              <SubItem
+                key={subitem.id}
+                item={subitem}
+                menuId={item.id}
+                activeSubItems={activeSubItems}
+                setActiveSubItems={setActiveSubItems}
+              />
+            ))}
+          </ul>
+        </section>
+      </>
     );
   },
 );
