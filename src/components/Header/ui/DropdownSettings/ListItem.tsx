@@ -1,7 +1,8 @@
 import { FC, memo, MouseEvent } from "react";
-import { BaseIcon } from "@src/shared/Icons";
 import { IDropdownItem } from "../../model/types";
+import { BaseIcon } from "@src/shared/Icons";
 import { useMenu } from "@src/hooks/useMenu";
+import { ISelected } from "@src/context/MenuContext";
 
 interface IDropdownSettingsItemProps {
   item: IDropdownItem;
@@ -16,7 +17,7 @@ export const ListItem: FC<IDropdownSettingsItemProps> = memo(({ item }) => {
     e.stopPropagation();
 
     if (submenu) {
-      setMenuId(id);
+      setMenuId(id as keyof ISelected);
     }
   };
 

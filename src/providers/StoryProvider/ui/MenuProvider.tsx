@@ -3,8 +3,7 @@ import { ReactNode, useMemo, useState } from "react";
 import {
   MenuAppsContext,
   IAppsContext,
-  IActiveItem,
-  TMenuIds,
+  ISelected,
 } from "@src/context/MenuContext";
 
 interface SidebarProviderProps {
@@ -13,17 +12,31 @@ interface SidebarProviderProps {
 
 const MenuAppsProvider = (props: SidebarProviderProps) => {
   const { children } = props;
-  const [activeItems, setActiveItems] = useState<IActiveItem[]>([]);
-  const [menuId, setMenuId] = useState<TMenuIds | null>(null);
+  const [selected, setSelected] = useState<ISelected>({
+    appearance: {
+      id: "1",
+      label: "Device theme",
+    },
+    language: {
+      id: "1",
+      label: "Russian",
+    },
+    location: {
+      id: "1",
+      label: "Russia",
+    },
+    restricted: false,
+  });
+  const [menuId, setMenuId] = useState<keyof ISelected | null>(null);
 
   const defaultProps: IAppsContext = useMemo(
     () => ({
-      activeItems,
-      setActiveItems,
+      selected,
+      setSelected,
       menuId,
       setMenuId,
     }),
-    [activeItems, menuId],
+    [selected, menuId],
   );
 
   return (

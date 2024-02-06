@@ -6,7 +6,7 @@ export const Appearance: FC = memo(() => {
   const list = [
     {
       id: "1",
-      label: "Use device theme",
+      label: "Device theme",
     },
     {
       id: "2",

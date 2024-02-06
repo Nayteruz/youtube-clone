@@ -2,6 +2,7 @@ import { FC, memo, MouseEvent } from "react";
 import { BaseIcon } from "@src/shared/Icons";
 import { IDropdownSubitem } from "../../model/types";
 import { useMenu } from "@src/hooks/useMenu";
+import { ISelectedItem } from "@src/context/MenuContext";
 
 interface ISubItemProps {
   item: IDropdownSubitem;
@@ -9,22 +10,22 @@ interface ISubItemProps {
 
 export const SubItem: FC<ISubItemProps> = memo(({ item }) => {
   const { label, link, id } = item;
-  const { activeItems, setActiveItems, menuId } = useMenu();
+  const { selected, setSelected, menuId } = useMenu();
 
   const changeSubItemMenu = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const actives = activeItems.filter(
-      (activeItem) => activeItem.menuId !== menuId,
-    );
-
-    setActiveItems([...actives, { menuId: menuId || "", subMenuId: id }]);
+    if (menuId) {
+      setSelected((prev) => ({ ...prev, [menuId]: { id, label } }));
+    }
   };
 
-  const isActive = activeItems.find(
-    (active) => active.menuId === menuId && active.subMenuId === item.id,
-  );
+  if (!menuId) {
+    return;
+  }
+
+  const selectedMenu: ISelectedItem = selected[menuId] as ISelectedItem;
 
   return (
     <li>
@@ -36,10 +37,10 @@ export const SubItem: FC<ISubItemProps> = memo(({ item }) => {
         <span className="w-6 h-6">
           <BaseIcon
             icon="check"
-            className={`${isActive ? "opacity-100" : "opacity-20"}`}
+            className={`${selectedMenu.id === id ? "opacity-100" : "opacity-20"}`}
           />
         </span>
-        <span>{label}</span>
+        <span className="truncate flex-1">{label}</span>
       </a>
     </li>
   );
