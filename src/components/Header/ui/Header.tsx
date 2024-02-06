@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { BaseIcon } from "@src/shared/Icons";
 import { LogoMain } from "@src/shared/ui/LogoMain";
 import { ButtonLogin } from "@src/shared/ui/ButtonLogin";
@@ -6,8 +7,7 @@ import { useChangeViewSidebar } from "@src/hooks/useChangeViewSidebar";
 import { DropdownApps } from "./DropdownApps";
 import { DropdownSettings } from "./DropdownSettings";
 import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
-import { SearchMobile } from "@src/components/Header/ui/SearchMobile";
-import { useEffect, useState } from "react";
+import { SearchMobile } from "./SearchMobile/";
 
 const SMALL_SCREEN_WIDTH = 640;
 
