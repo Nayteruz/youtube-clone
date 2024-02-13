@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { BaseIcon } from "@src/shared/Icons";
 import { LogoMain } from "@src/shared/ui/LogoMain";
 import { ButtonLogin } from "@src/shared/ui/ButtonLogin";
-import { Search } from "./Search";
 import { useChangeViewSidebar } from "@src/hooks/useChangeViewSidebar";
 import { DropdownApps } from "./DropdownApps";
 import { DropdownSettings } from "./DropdownSettings";
 import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
-import { SearchMobile } from "./SearchMobile/";
+import { SearchWrapper } from "@src/components/Header/ui/SearchWrapper";
 
 const SMALL_SCREEN_WIDTH = 640;
 
@@ -15,14 +14,25 @@ export const Header = () => {
   const { changeView } = useChangeViewSidebar();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [isMobileSearchActive, setIsMobileSearchActive] = useState(false);
-  const searchShown = isSmallScreen && isMobileSearchActive;
+  const isMobileSearchShown = isSmallScreen && isMobileSearchActive;
+  const isSearchShown = isMobileSearchShown || !isSmallScreen;
   const classes = `flex justify-between w-full z-30 relative`;
+
+  const closeMobileSearch = () => {
+    setIsMobileSearchActive(false);
+  };
+
+  const mobileSearchShow = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsMobileSearchActive(true);
+  };
 
   useEffect(() => {
     const changeScreen = () => {
       setIsSmallScreen(window.innerWidth < SMALL_SCREEN_WIDTH);
       if (window.innerWidth > SMALL_SCREEN_WIDTH) {
-        setIsMobileSearchActive(false);
+        closeMobileSearch();
       }
     };
     changeScreen();
@@ -51,15 +61,12 @@ export const Header = () => {
           </a>
         </div>
       </div>
-      {searchShown && <SearchMobile changeActive={setIsMobileSearchActive} />}
-      <div className="hidden sm:flex items-center justify-end p-2.5 pl-8 md:pl-12 md:px-8 flex-1 lg:px-0 lg:w-1/2 max-w-screen-md">
-        <Search />
-        <BaseTooltip textLabel="Search with your voice">
-          <button className="p-2 focus:outline-none">
-            <BaseIcon icon={"microphone"} className="w-5 h-5" />
-          </button>
-        </BaseTooltip>
-      </div>
+      {isSearchShown && (
+        <SearchWrapper
+          isSmallScreen={isSmallScreen}
+          closeMobileSearch={closeMobileSearch}
+        />
+      )}
       <div
         className={`flex items-center justify-end lg:w-1/4 sm:space-x-3 p-2 sm:px-4 ${isMobileSearchActive ? "opacity-0" : "opacity-100"}`}
       >
@@ -70,7 +77,7 @@ export const Header = () => {
         </BaseTooltip>
         <BaseTooltip textLabel="Search">
           <button
-            onClick={() => setIsMobileSearchActive(true)}
+            onClick={mobileSearchShow}
             className="sm:hidden p-2 focus:outline-none mobile-search"
           >
             <BaseIcon icon="search" className="w-5 h-5" />
