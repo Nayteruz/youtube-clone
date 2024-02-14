@@ -21,7 +21,6 @@ const keywords = [
 ];
 
 export const Search: FC = memo(() => {
-  const [isSearchInputFocused, setIsSearchInputFocused] = useState(false);
   const [results, setResults] = useState<string[]>([]);
   const [query, setQuery] = useState("");
   const [activeQuery, setActiveQuery] = useState("");
@@ -29,18 +28,14 @@ export const Search: FC = memo(() => {
   const [activeSearchResultId, setActiveSearchResultId] = useState<
     number | null
   >(null);
-  const isResultsShown = results.length > 0 && isSearchInputFocused;
 
   const trimmedQuery = useMemo(() => {
     return query.replace(/\s+/g, "").trim();
   }, [query]);
 
-  const toggleSearchResults = useMemo(
-    () => (isSearchInputActive: boolean) => {
-      setIsSearchResultsShown(isSearchInputActive && results.length > 0);
-    },
-    [results],
-  );
+  const toggleSearchResults = (isSearchInputActive: boolean) => {
+    setIsSearchResultsShown(isSearchInputActive && results.length > 0);
+  };
 
   useEffect(() => {
     const onClickAndResize = () => toggleSearchResults(false);
@@ -63,17 +58,58 @@ export const Search: FC = memo(() => {
     updateSearchResults();
   };
 
-  const updateSearchResults = () => {
-    setActiveSearchResultId(null);
-    setActiveQuery(query);
+  const updateSearchResults = useMemo(
+    () => () => {
+      setActiveSearchResultId(null);
+      setActiveQuery(query);
 
-    if (query === "") {
-      setResults([]);
+      if (query === "") {
+        setResults([]);
+      } else {
+        const newResult = keywords.filter((result) => {
+          return result.includes(trimmedQuery);
+        });
+        setResults(newResult);
+      }
+    },
+    [query, trimmedQuery],
+  );
+
+  const handlePreviousSearchResult = () => {
+    if (isSearchResultsShown) {
+      makePreviousSearchResultActive();
+      updateQueryWithSearchResult();
     } else {
-      const newResult = keywords.filter((result) => {
-        return result.includes(trimmedQuery);
-      });
-      setResults(newResult);
+      toggleSearchResults(true);
+    }
+  };
+
+  const handleNextSearchResult = () => {
+    if (isSearchResultsShown) {
+      makeNextSearchResultActive();
+      updateQueryWithSearchResult();
+    } else {
+      toggleSearchResults(true);
+    }
+  };
+
+  const makePreviousSearchResultActive = () => {
+    if (activeSearchResultId === null) {
+      setActiveSearchResultId(results.length - 1);
+    } else if (activeSearchResultId === 0) {
+      setActiveSearchResultId(null);
+    } else {
+      setActiveSearchResultId(activeSearchResultId + 1);
+    }
+  };
+
+  const makeNextSearchResultActive = () => {
+    if (activeSearchResultId === null) {
+      setActiveSearchResultId(0);
+    } else if (activeSearchResultId + 1 === results.length) {
+      setActiveSearchResultId(null);
+    } else {
+      setActiveSearchResultId(activeSearchResultId + 1);
     }
   };
 
@@ -91,7 +127,9 @@ export const Search: FC = memo(() => {
   };
 
   // input
-
+  useEffect(() => {
+    updateSearchResults();
+  }, [query, updateSearchResults]);
   ///
 
   return (
@@ -100,14 +138,11 @@ export const Search: FC = memo(() => {
         <InputSearch
           query={query}
           setQuery={setQuery}
-          isSearchInputFocused={isSearchInputFocused}
-          setIsSearchInputFocused={setIsSearchInputFocused}
-          isResultsShown={isResultsShown}
-          activeResultId={activeSearchResultId}
-          setActiveResultId={setActiveSearchResultId}
-          results={results}
-          activeQuery={activeQuery}
-          setActiveQuery={setActiveQuery}
+          hasResults={results.length > 0}
+          handlePreviousSearchResult={handlePreviousSearchResult}
+          handleNextSearchResult={handleNextSearchResult}
+          selectSearchResult={selectSearchResult}
+          toggleSearchResults={toggleSearchResults}
         />
         {isSearchResultsShown && (
           <ResultsSearch
