@@ -29,13 +29,19 @@ export const Search: FC = memo(() => {
     number | null
   >(null);
 
-  const trimmedQuery = useMemo(() => {
-    return query.replace(/\s+/g, "").trim();
-  }, [query]);
+  const trimmedQuery = useMemo(
+    () => (newQuery: string) => {
+      return newQuery.replace(/\s+/g, " ").trim();
+    },
+    [],
+  );
 
-  const toggleSearchResults = (isSearchInputActive: boolean) => {
-    setIsSearchResultsShown(isSearchInputActive && results.length > 0);
-  };
+  const toggleSearchResults = useMemo(
+    () => (isSearchInputActive: boolean) => {
+      setIsSearchResultsShown(isSearchInputActive && results.length > 0);
+    },
+    [results.length],
+  );
 
   useEffect(() => {
     const onClickAndResize = () => toggleSearchResults(false);
@@ -49,31 +55,28 @@ export const Search: FC = memo(() => {
     };
   }, [toggleSearchResults]);
 
+  const updateSearchResults = (newQuery: string) => {
+    setActiveSearchResultId(null);
+    setActiveQuery(newQuery);
+
+    if (newQuery === "") {
+      setResults([]);
+    } else {
+      const newResult = keywords.filter((result) => {
+        return result.includes(trimmedQuery(newQuery));
+      });
+      setResults(newResult);
+    }
+  };
+
   const selectSearchResult = () => {
     const newQuery = activeSearchResultId
       ? results[activeSearchResultId]
       : query;
     setQuery(newQuery);
     toggleSearchResults(false);
-    updateSearchResults();
+    updateSearchResults(newQuery);
   };
-
-  const updateSearchResults = useMemo(
-    () => () => {
-      setActiveSearchResultId(null);
-      setActiveQuery(query);
-
-      if (query === "") {
-        setResults([]);
-      } else {
-        const newResult = keywords.filter((result) => {
-          return result.includes(trimmedQuery);
-        });
-        setResults(newResult);
-      }
-    },
-    [query, trimmedQuery],
-  );
 
   const handlePreviousSearchResult = () => {
     if (isSearchResultsShown) {
@@ -94,31 +97,34 @@ export const Search: FC = memo(() => {
   };
 
   const makePreviousSearchResultActive = () => {
-    if (activeSearchResultId === null) {
-      setActiveSearchResultId(results.length - 1);
-    } else if (activeSearchResultId === 0) {
-      setActiveSearchResultId(null);
-    } else {
-      setActiveSearchResultId(activeSearchResultId + 1);
-    }
+    setActiveSearchResultId((prev) => {
+      if (prev === null) {
+        return results.length - 1;
+      } else if (prev === 0) {
+        return null;
+      } else {
+        return prev - 1;
+      }
+    });
   };
 
   const makeNextSearchResultActive = () => {
-    if (activeSearchResultId === null) {
-      setActiveSearchResultId(0);
-    } else if (activeSearchResultId + 1 === results.length) {
-      setActiveSearchResultId(null);
-    } else {
-      setActiveSearchResultId(activeSearchResultId + 1);
-    }
+    setActiveSearchResultId((prev) => {
+      if (prev === null) {
+        return 0;
+      } else if (prev + 1 === results.length) {
+        return null;
+      } else {
+        return prev + 1;
+      }
+    });
   };
 
   const updateQueryWithSearchResult = () => {
-    const hasActiveSearchResult = activeSearchResultId !== null;
-
-    const newQuery = hasActiveSearchResult
-      ? results[activeSearchResultId]
-      : activeQuery;
+    const newQuery =
+      activeSearchResultId !== null
+        ? results[activeSearchResultId]
+        : activeQuery;
     setQuery(newQuery);
   };
 
@@ -126,18 +132,13 @@ export const Search: FC = memo(() => {
     setActiveSearchResultId(id);
   };
 
-  // input
-  useEffect(() => {
-    updateSearchResults();
-  }, [query, updateSearchResults]);
-  ///
-
   return (
     <div className="flex w-full mr-2">
       <div className="w-full relative flex">
         <InputSearch
           query={query}
           setQuery={setQuery}
+          updateSearchResults={updateSearchResults}
           hasResults={results.length > 0}
           handlePreviousSearchResult={handlePreviousSearchResult}
           handleNextSearchResult={handleNextSearchResult}

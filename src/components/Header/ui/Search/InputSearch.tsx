@@ -4,7 +4,6 @@ import {
   KeyboardEvent as TypeKeyboardEvent,
   SetStateAction,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -13,6 +12,7 @@ import { BaseIcon } from "@src/shared/Icons";
 interface InputSearchProps {
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
+  updateSearchResults: (value: string) => void;
   hasResults: boolean;
   handlePreviousSearchResult: () => void;
   handleNextSearchResult: () => void;
@@ -28,6 +28,7 @@ export const InputSearch: FC<InputSearchProps> = ({
   handleNextSearchResult,
   selectSearchResult,
   toggleSearchResults,
+  updateSearchResults,
 }) => {
   const [isActive, setIsActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35,7 +36,6 @@ export const InputSearch: FC<InputSearchProps> = ({
 
   const clearInputText = () => {
     inputRef.current?.focus();
-    // setQuery("");
     updateQuery("");
   };
 
@@ -71,6 +71,7 @@ export const InputSearch: FC<InputSearchProps> = ({
   const updateQuery = (query: string) => {
     setQuery(query);
     setState(isActive);
+    updateSearchResults(query);
   };
 
   const onSlash = useRef((e: KeyboardEvent) => {
@@ -108,17 +109,18 @@ export const InputSearch: FC<InputSearchProps> = ({
   };
 
   const onKeyUp = (e: TypeKeyboardEvent) => {
-    // e.preventDefault();
-
     if (e.code === "ArrowUp") {
+      e.preventDefault();
       handlePreviousSearchResult();
     }
 
     if (e.code === "ArrowDown") {
+      e.preventDefault();
       handleNextSearchResult();
     }
 
     if (e.code === "Escape") {
+      e.preventDefault();
       handleEsc();
     }
   };
@@ -133,7 +135,6 @@ export const InputSearch: FC<InputSearchProps> = ({
         value={query}
         onChange={(e) => updateQuery(e.target.value)}
         onFocus={() => setState(true)}
-        // onBlur={() => setIsSearchInputFocused(false)}
         onClick={(e) => {
           e.preventDefault();
           setState(true);

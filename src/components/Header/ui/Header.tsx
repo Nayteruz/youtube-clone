@@ -18,29 +18,31 @@ export const Header = () => {
   const isSearchShown = isMobileSearchShown || !isSmallScreen;
   const classes = `flex justify-between w-full z-30 relative`;
 
-  const closeMobileSearch = () => {
-    setIsMobileSearchActive(false);
-  };
-
   const mobileSearchShow = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsMobileSearchActive(true);
   };
 
-  useEffect(() => {
-    const changeScreen = () => {
-      setIsSmallScreen(window.innerWidth < SMALL_SCREEN_WIDTH);
-      if (window.innerWidth > SMALL_SCREEN_WIDTH) {
-        closeMobileSearch();
-      }
-    };
-    changeScreen();
+  const closeMobileSearch = () => {
+    setIsMobileSearchActive(false);
+  };
 
-    window.addEventListener("resize", changeScreen);
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth < SMALL_SCREEN_WIDTH) {
+        setIsSmallScreen(true);
+        return;
+      }
+      closeMobileSearch();
+      setIsSmallScreen(false);
+    };
+    onResize();
+
+    window.addEventListener("resize", onResize);
 
     return () => {
-      window.removeEventListener("resize", changeScreen);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
