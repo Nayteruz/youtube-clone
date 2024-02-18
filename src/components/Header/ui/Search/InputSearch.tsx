@@ -1,127 +1,77 @@
-import {
-  Dispatch,
-  FC,
-  KeyboardEvent as TypeKeyboardEvent,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, RefObject, useEffect, useRef } from "react";
 import { BaseIcon } from "@src/shared/Icons";
 
 interface InputSearchProps {
   query: string;
-  setQuery: Dispatch<SetStateAction<string>>;
-  updateSearchResults: (value: string) => void;
-  hasResults: boolean;
-  handlePreviousSearchResult: () => void;
-  handleNextSearchResult: () => void;
+  activeQuery: string;
+  changeQuery: (value: string) => void;
+  closeResults: (input: RefObject<HTMLInputElement>) => void;
+  showResults: () => void;
+  selectedId: number | null;
+  changeSelectedId: (action: "up" | "down") => void;
   selectSearchResult: () => void;
-  toggleSearchResults: (value: boolean) => void;
 }
 
 export const InputSearch: FC<InputSearchProps> = ({
   query,
-  setQuery,
-  hasResults,
-  handlePreviousSearchResult,
-  handleNextSearchResult,
+  activeQuery,
+  changeQuery,
+  closeResults,
+  showResults,
+  selectedId,
+  changeSelectedId,
   selectSearchResult,
-  toggleSearchResults,
-  updateSearchResults,
 }) => {
-  const [isActive, setIsActive] = useState(false);
+  const inputValue = selectedId !== null ? activeQuery : query;
   const inputRef = useRef<HTMLInputElement>(null);
   const classes = `w-full h-full px-3 shadow-inner rounded-bl-sm rounded-tl-sm border border-gray-300 focus:border-blue-700 focus:outline-none`;
 
   const clearInputText = () => {
     inputRef.current?.focus();
-    updateQuery("");
+    changeQuery("");
   };
-
-  const removeSelection = () => {
-    const end = inputRef.current?.value.length || 0;
-
-    inputRef.current?.setSelectionRange(end, end);
-  };
-
-  const handleEnter = () => {
-    setState(false);
-
-    inputRef.current?.blur();
-
-    selectSearchResult();
-  };
-
-  const handleEsc = () => {
-    removeSelection();
-
-    if (isActive && hasResults) {
-      setState(false);
-    } else {
-      inputRef.current?.blur();
-    }
-  };
-
-  const setState = (isActive: boolean) => {
-    setIsActive(isActive);
-    toggleSearchResults(isActive);
-  };
-
-  const updateQuery = (query: string) => {
-    setQuery(query);
-    setState(isActive);
-    updateSearchResults(query);
-  };
-
-  const onSlash = useRef((e: KeyboardEvent) => {
-    const isInputFocused = inputRef.current === document.activeElement;
-
-    if (e.code === "Slash" && !isInputFocused) {
-      e.preventDefault();
-
-      inputRef.current?.focus();
-    }
-  });
 
   useEffect(() => {
     if (window.innerWidth <= 640) {
       inputRef.current?.focus();
     }
 
-    const onSlashAction = onSlash.current;
+    const onSlash = (e: KeyboardEvent) => {
+      const isInputFocused = inputRef.current === document.activeElement;
 
-    document.addEventListener("keydown", onSlashAction);
+      if (e.code === "Slash" && !isInputFocused) {
+        e.preventDefault();
+
+        inputRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onSlash);
 
     return () => {
-      document.removeEventListener("keydown", onSlashAction);
+      document.removeEventListener("keydown", onSlash);
     };
   }, []);
 
-  const onKeyDown = (e: TypeKeyboardEvent) => {
-    if (e.code === "ArrowUp" || e.code === "ArrowDown") {
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.code === "Escape") {
       e.preventDefault();
+      closeResults(inputRef);
     }
 
-    if (e.code === "Enter") {
-      handleEnter();
-    }
-  };
-
-  const onKeyUp = (e: TypeKeyboardEvent) => {
     if (e.code === "ArrowUp") {
       e.preventDefault();
-      handlePreviousSearchResult();
+      changeSelectedId("up");
     }
 
     if (e.code === "ArrowDown") {
       e.preventDefault();
-      handleNextSearchResult();
+      changeSelectedId("down");
     }
 
-    if (e.code === "Escape") {
+    if (e.code === "Enter") {
       e.preventDefault();
-      handleEsc();
+      selectSearchResult();
     }
   };
 
@@ -132,15 +82,12 @@ export const InputSearch: FC<InputSearchProps> = ({
         type="text"
         placeholder="Search"
         className={classes}
-        value={query}
-        onChange={(e) => updateQuery(e.target.value)}
-        onFocus={() => setState(true)}
-        onClick={(e) => {
-          e.preventDefault();
-          setState(true);
-        }}
+        value={inputValue}
+        onChange={(e) => changeQuery(e.target.value)}
+        // onFocus={() => setState(true)}
+        onClick={showResults}
         onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
+        // onKeyUp={onKeyUp}
       />
       {query.length > 0 && (
         <button

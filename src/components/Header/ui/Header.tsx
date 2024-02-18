@@ -6,7 +6,7 @@ import { useChangeViewSidebar } from "@src/hooks/useChangeViewSidebar";
 import { DropdownApps } from "./DropdownApps";
 import { DropdownSettings } from "./DropdownSettings";
 import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
-import { SearchWrapper } from "@src/components/Header/ui/SearchWrapper";
+import { SearchWrapper } from "./Search";
 
 const SMALL_SCREEN_WIDTH = 640;
 
