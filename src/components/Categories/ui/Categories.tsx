@@ -5,7 +5,7 @@ import { useStory } from "@src/hooks/useStory";
 
 export const Categories = memo(() => {
   const { stateBar } = useStory();
-  const normalClasses = "md:ml-24 z-40";
+  const normalClasses = "md:ml-24 z-40 bg-white bg-opacity-95";
   const isCompact =
     stateBar.isCompactSidebarOpen || stateBar.isCompactSidebarActive
       ? "xl:ml-24"

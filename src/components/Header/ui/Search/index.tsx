@@ -6,11 +6,13 @@ import { BaseTooltip } from "@src/shared/ui/BaseTooltip";
 interface ISearchWrapperProps {
   isSmallScreen: boolean;
   closeMobileSearch: () => void;
+  changeVoice: (value: boolean) => void;
 }
 
 export const SearchWrapper: FC<ISearchWrapperProps> = ({
   isSmallScreen,
   closeMobileSearch,
+  changeVoice,
 }) => {
   const classes = isSmallScreen
     ? "absolute w-full p-2 z-10 flex"
@@ -45,7 +47,10 @@ export const SearchWrapper: FC<ISearchWrapperProps> = ({
       )}
       <Search />
       <BaseTooltip textLabel="Search with your voice" right={true}>
-        <button className="p-2 focus:outline-none">
+        <button
+          onClick={() => changeVoice(true)}
+          className="p-2 focus:outline-none"
+        >
           <BaseIcon icon={"microphone"} className="w-5 h-5" />
         </button>
       </BaseTooltip>
