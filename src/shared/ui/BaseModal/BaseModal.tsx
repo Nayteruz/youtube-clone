@@ -1,53 +1,61 @@
-import { FC, memo, ReactNode, useCallback, useEffect, useState } from "react";
+import { FC, memo, ReactNode, useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { CloseButton } from "./CloseButton";
 import { BaseModalOverlay } from "./BaseModalOverlay";
+import WithAnimation from "@src/hoc/WithAnimation";
 
 interface IBaseModalProps {
   setOpen?: (value: boolean) => void;
+  isOpen: boolean;
   children?: ReactNode;
 }
 
-export const BaseModal: FC<IBaseModalProps> = memo(({ setOpen, children }) => {
-  const [isAnimate, setIsAnimate] = useState(false);
-  const close = useCallback(() => {
-    setIsAnimate(true);
-    setTimeout(() => {
+export const BaseModal: FC<IBaseModalProps> = memo(
+  ({ setOpen, children, isOpen }) => {
+    const overlayRef = useRef(null);
+    const closeModal = useCallback(() => {
       setOpen?.(false);
-      setIsAnimate(false);
-    }, 200);
-  }, [setOpen]);
+    }, [setOpen]);
 
-  useEffect(() => {
-    const closeOnEscape = (e: KeyboardEvent) => {
-      if (e.code === "Escape") {
-        close();
-      }
-    };
+    useEffect(() => {
+      const closeOnEscape = (e: KeyboardEvent) => {
+        if (e.code === "Escape") {
+          closeModal();
+        }
+      };
 
-    window.addEventListener("keydown", closeOnEscape);
+      window.addEventListener("keydown", closeOnEscape);
 
-    return () => {
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [close]);
+      return () => {
+        window.removeEventListener("keydown", closeOnEscape);
+      };
+    }, [closeModal]);
 
-  return (
-    <>
-      {createPortal(
-        <div className="fixed inset-0 z-50 focus:outline-none flex items-start justify-center">
-          <BaseModalOverlay close={close} isAnimate={isAnimate} />
-          {!isAnimate && (
-            <div className="bg-white w-2/3 m-8 relative">
-              <CloseButton close={close} />
-              <div className="p-6">{children}</div>
+    return (
+      <>
+        {createPortal(
+          <WithAnimation
+            delay={2000}
+            state={isOpen}
+            nodeRef={overlayRef}
+            enterClass="animate-[fadeIn_2000ms_ease-in-out]"
+            exitClass="animate-[fadeOut_2000ms_ease-in-out]"
+          >
+            <div className="fixed inset-0 z-50 focus:outline-none flex items-start justify-center">
+              <BaseModalOverlay nodeRef={overlayRef} close={closeModal} />
+              {isOpen && (
+                <div className="bg-white w-2/3 m-8 relative">
+                  <CloseButton close={closeModal} />
+                  <div className="p-6">{children}</div>
+                </div>
+              )}
             </div>
-          )}
-        </div>,
-        document.body,
-      )}
-    </>
-  );
-});
+          </WithAnimation>,
+          document.body,
+        )}
+      </>
+    );
+  },
+);
 
 BaseModal.displayName = "BaseModal";

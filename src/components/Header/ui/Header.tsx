@@ -97,7 +97,7 @@ export const Header = () => {
         <DropdownApps />
         <DropdownSettings />
         <ButtonLogin className="whitespace-nowrap py-1" />
-        {isVoiceModalOpen && <ModalSearchWithVoice setOpen={changeVoice} />}
+        <ModalSearchWithVoice setOpen={changeVoice} isOpen={isVoiceModalOpen} />
       </div>
     </header>
   );

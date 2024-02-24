@@ -1,22 +1,19 @@
-import { FC } from "react";
+import { FC, RefObject } from "react";
 
-interface IBaseModalOverlayProps {
+interface IBaseModalOverlayProps<T> {
   close: () => void;
-  isAnimate: boolean;
+  nodeRef: RefObject<T>;
 }
 
-export const BaseModalOverlay: FC<IBaseModalOverlayProps> = ({
+export const BaseModalOverlay: FC<IBaseModalOverlayProps<HTMLDivElement>> = ({
   close,
-  isAnimate,
+  nodeRef,
 }) => {
-  const animation = isAnimate
-    ? "animate-[fadeOut_300ms_ease-in-out]"
-    : "animate-[fadeIn_200ms_ease-in-out]";
-
   return (
     <div
-      className={`absolute inset-0 bg-black bg-opacity-80 ${animation}`}
+      className={`absolute inset-0 bg-black bg-opacity-80`}
       onClick={close}
-    ></div>
+      ref={nodeRef}
+    />
   );
 };
